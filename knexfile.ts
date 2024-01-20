@@ -19,7 +19,7 @@ const config: KnexConfig = {
       max: 10
     },
     migrations: {
-      tableName: 'knex_migrations'
+      tableName: 'migrations'
     }
   },
 
@@ -36,7 +36,7 @@ const config: KnexConfig = {
       max: 10
     },
     migrations: {
-      tableName: 'knex_migrations'
+      tableName: 'migrations'
     }
   },
 
@@ -53,7 +53,7 @@ const config: KnexConfig = {
       max: 10
     },
     migrations: {
-      tableName: 'knex_migrations'
+      tableName: 'migrations'
     }
   }
 };
