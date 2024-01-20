@@ -10,7 +10,6 @@ const config: KnexConfig = {
     client: 'mysql2',
     connection: {
       host: process.env.DEV_DB_HOST,
-      port : process.env.DEV_DB_PORT,
       database: process.env.DEV_DB_NAME,
       user: process.env.DEV_DB_USER,
       password: process.env.DEV_DB_PASSWORD,
