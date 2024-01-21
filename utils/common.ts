@@ -2,3 +2,12 @@ export function getRandomElement<T>(items: T[]): T {
     let randomIndex = Math.floor(Math.random() * items.length);
     return items[randomIndex];
 }
+
+export function createResponse(message: string, status: number) {
+    return new Response(JSON.stringify({ message }), {
+        headers: {
+            "Content-Type": "application/json",
+        },
+        status: status
+    });
+}

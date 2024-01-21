@@ -1,11 +1,6 @@
 import { Knex } from "knex";
 import { faker } from '@faker-js/faker';
-
-function getRandomElement<T>(items: T[]): T {
-    let randomIndex = Math.floor(Math.random() * items.length);
-    return items[randomIndex];
-}
-
+import { getRandomElement } from '../utils/common';
 
 export async function seed(knex: Knex): Promise<void> {
     // Deletes ALL existing entries in providers
