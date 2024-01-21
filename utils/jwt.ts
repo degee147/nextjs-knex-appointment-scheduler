@@ -11,21 +11,9 @@ export const generateToken = (userId: number | string): string => {
 
 export const verifyToken = (token: string): string | jwt.JwtPayload => {
     try {
-        return jwt.verify(token, JWT_SECRET);
+        return jwt.verify(token as string, JWT_SECRET);
     } catch (error) {
+        // console.log('verification error', error);
         throw new Error('Invalid or expired token');
-    }
-};
-
-export const authenticated = (fn: NextApiHandler) => async (
-    req: NextApiRequest,
-    res: NextApiResponse
-) => {
-    try {
-        const token = req.headers.authorization?.split(' ')[1];
-        verifyToken(token as string);
-        return await fn(req, res);
-    } catch (error) {
-        res.status(401).json({ message: 'Unauthorized' });
     }
 };
