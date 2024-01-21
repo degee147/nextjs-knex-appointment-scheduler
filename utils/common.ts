@@ -11,3 +11,12 @@ export function createResponse(message: string, status: number) {
         status: status
     });
 }
+
+export function tokenResponse(token: string, status: number) {
+    return new Response(JSON.stringify({ token }), {
+        headers: {
+            "Content-Type": "application/json",
+        },
+        status: status
+    });
+}

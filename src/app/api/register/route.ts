@@ -3,7 +3,7 @@ import { createUser } from '../../../lib/user';
 import bcrypt from 'bcryptjs';
 import { generateToken } from '../../../../utils/jwt';
 import db from '../../../../utils/database';
-import { createResponse } from '../../../../utils/common';
+import { createResponse, tokenResponse } from '../../../../utils/common';
 
 export async function POST(request: Request) {
 
@@ -32,14 +32,7 @@ export async function POST(request: Request) {
 
         // Step 4: Generate a Token or Confirmation Response
         const token = generateToken(userId);
-
-        return new Response(JSON.stringify({ token }), {
-            headers: {
-                "Content-Type": "application/json",
-            },
-            status: 201
-        });
-
+        return tokenResponse(token, 201);
 
     } catch (error) {
         console.error(error);
