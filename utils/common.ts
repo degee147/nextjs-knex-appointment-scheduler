@@ -3,8 +3,8 @@ export function getRandomElement<T>(items: T[]): T {
     return items[randomIndex];
 }
 
-export function createResponse(message: string, status: number) {
-    return new Response(JSON.stringify({ message }), {
+export function createResponse(message: string, status: number, data?: any) {
+    return new Response(JSON.stringify({ message, data }), {
         headers: {
             "Content-Type": "application/json",
         },

@@ -1,4 +1,3 @@
-import { Knex, knex } from 'knex';
 import db from '../../utils/database';
 import { User } from '../../src/@types';
 
@@ -18,21 +17,18 @@ export const createUser = async (name: string, email: string, hashedPassword: st
         is_provider: is_provider,
     };
 
-
-
     try {
         const insertedId = await db('users').insert(user);
-        // console.log('insertedId:', insertedId);
-        // console.log('Inserted user:', insertedUser);
         return insertedId[0];
-
-
     } catch (error) {
         // error handling
         console.error('Error inserting user:', error);
     }
 
+    return 0;
+};
 
-
-    return 2;
+export const users = async (): Promise<any> => {
+    const users = await db('users').select('*');
+    return users;
 };
