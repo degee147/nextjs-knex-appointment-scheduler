@@ -74,7 +74,7 @@ export default function SchedulesPage() {
         });
         if (!response.ok) {
           setIsLoading(false);
-          toast('Network response was not ok');
+          toast('No appointment schedules at the moment');
           return;
         }
 

@@ -32,11 +32,14 @@ export async function POST(request: Request) {
             appointment_date: slot.start_time
         };
 
-        const insertedId = await db('appointments').insert(appointment);
+
+        console.log("appointment", appointment);
+
+        const insertedId = await db('appointments').insert(appointment).returning('id');
         if (insertedId.length <= 0) {
             return createResponse("Unable to schedule appointment", 400);
         }
-        
+
         const updateCount = await db('time_slots')
             .where({ id: body.time_slot_id })
             .update({ is_booked: true });

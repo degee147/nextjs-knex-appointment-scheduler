@@ -33,8 +33,10 @@ export async function POST(request: Request) {
             return createResponse("Could not create user record", 400);
         }
 
+        console.log("user id", userId);
+
         // Step 4: Generate a Token or Confirmation Response
-        const token = generateToken(userId);
+        const token = generateToken(String(userId));
         return tokenResponse(token, 201, String(userId));
 
     } catch (error) {

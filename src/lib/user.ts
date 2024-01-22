@@ -18,8 +18,10 @@ export const createUser = async (name: string, email: string, hashedPassword: st
     };
 
     try {
-        const insertedId = await db('users').insert(user);
-        return insertedId[0];
+        const insertedId = await db('users').insert(user).returning('id');
+        // const insertedId = await db('users').insert(user);
+        console.log("insertedId",insertedId);
+        return insertedId[0]?.id;
     } catch (error) {
         console.error('Error inserting user:', error);
     }

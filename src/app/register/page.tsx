@@ -72,6 +72,7 @@ export default function Register() {
       });
 
       const data = await response.json();
+      console.log("data", data);
       if (data.token) {
         setIsLoading(false);
         login(data.token, data.user_id);
