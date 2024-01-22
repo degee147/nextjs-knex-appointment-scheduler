@@ -65,7 +65,7 @@ export default function Login() {
       const data = await response.json();
       if (data.token) {
         toast.success("Login successful");
-        login(data.token);
+        login(data.token, data.user_id);
         setIsLoading(false);
         router.push('/dashboard');
         return;

@@ -1,6 +1,6 @@
 import { Knex } from "knex";
 import { faker } from '@faker-js/faker';
-import { getRandomElement } from '../utils/common';
+import { getRandomElement, getRandomStartHour } from '../utils/common';
 
 
 export async function seed(knex: Knex): Promise<void> {
@@ -17,7 +17,10 @@ export async function seed(knex: Knex): Promise<void> {
         for (const day of daysOfWeek) {
             const startTime = new Date();
             startTime.setDate(startTime.getDate() + 1 + daysOfWeek.indexOf(day));
-            startTime.setHours(8, 0, 0, 0);
+
+            // Randomize the start hour between 7 AM and 4 PM
+            const startHour = getRandomStartHour();
+            startTime.setHours(startHour, 0, 0, 0);
 
             // End time is 4 hours later
             const endTime = new Date(startTime.getTime() + 4 * 60 * 60 * 1000);

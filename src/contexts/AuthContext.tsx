@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 
 export const AuthContext = createContext<{
     isLoggedIn: boolean;
-    login: (token: string) => void;
+    login: (token: string, user_id: string) => void;
     logout: () => void;
 } | null>(null);
 
@@ -33,8 +33,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         }
     }, []);
 
-    const login = (token: string) => {
+    const login = (token: string, user_id: string) => {
         localStorage.setItem('authToken', token);
+        localStorage.setItem('user_id', user_id);
         setIsLoggedIn(true);
     };
 

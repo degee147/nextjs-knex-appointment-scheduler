@@ -32,7 +32,7 @@ export async function POST(request: Request) {
 
         // Step 4: Generate a Token or Confirmation Response
         const token = generateToken(userId);
-        return tokenResponse(token, 201);
+        return tokenResponse(token, 201, userId);
 
     } catch (error) {
         console.error(error);

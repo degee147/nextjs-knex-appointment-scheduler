@@ -23,7 +23,7 @@ export async function POST(request: Request) {
             }
 
             const token = generateToken(user.id);
-            return tokenResponse(token, 201);
+            return tokenResponse(token, 201, user.id);
 
         } catch (error) {
             console.error(error);

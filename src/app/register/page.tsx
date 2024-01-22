@@ -74,7 +74,7 @@ export default function Register() {
       const data = await response.json();
       if (data.token) {
         setIsLoading(false);
-        login(data.token);
+        login(data.token, data.user_id);
         toast.success("Registration Successful. You're now logged in")
         router.push('/book-appointment');
         return;

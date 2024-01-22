@@ -8,10 +8,16 @@ const secret = process.env.JWT_SECRET;
 export function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
 
-    // Check if the route is either /providers or /users
-    if (pathname.startsWith('/api/providers') || pathname.startsWith('/api/users')) {
+    // Array of paths to check against
+    const pathsToCheck = ['/api/users'];
 
-   
+
+    // Check if the pathname starts with any of the paths in the array
+    const isMatch = pathsToCheck.some(path => pathname.startsWith(path));
+
+
+    if (isMatch) {
+
         const authHeader = req.headers.get('authorization');
 
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -39,7 +45,7 @@ export function middleware(req: NextRequest) {
             // so we disable during development
             // verifyToken(token);
 
-            
+
         } catch (err) {
             return new Response(JSON.stringify({ error: 'Invalid token' }), {
                 status: 403,
@@ -48,6 +54,9 @@ export function middleware(req: NextRequest) {
                 },
             });
         }
+    } else {
+        // The pathname does not match
+        // console.log('Pathname does not match any of the specified paths');
     }
 
     return NextResponse.next();

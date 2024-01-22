@@ -21,7 +21,6 @@ const ClientNavBar = () => {
                     {isLoggedIn && (
                         <>
                             <a href="/dashboard" className="hover:text-blue-500 transition duration-300">Dashboard</a>
-                            <a href="/appointments" className="hover:text-blue-500 transition duration-300">Appointments</a>
                         </>
                     )}
                 </div>

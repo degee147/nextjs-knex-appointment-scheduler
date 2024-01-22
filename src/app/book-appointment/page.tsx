@@ -6,46 +6,30 @@ import useAuthRedirect from '../../hooks/useAuthRedirect';
 import Dashboard from '../components/Dashboard';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import { Booking } from "../components/Booking";
 
 export default function BookAppointmentPage() {
   useAuthRedirect();
   return (
     <Dashboard title='Book Appointment'>
-      <Grid container spacing={3}>
+      <Grid container spacing={6}>
         {/* Chart */}
-        <Grid item xs={12} md={8} lg={9}>
-          <Paper
+        <Grid item xs={12} md={12} lg={12}>
+          {/* <Paper
             sx={{
               p: 2,
               display: 'flex',
               flexDirection: 'column',
-              height: 240,
+              // height: 240,
             }}
-          >
+          > */}
             {/* <Chart /> */}
-          </Paper>
+            <Booking/>
+          {/* </Paper> */}
         </Grid>
-        {/* Recent Deposits */}
-        <Grid item xs={12} md={4} lg={3}>
-          <Paper
-            sx={{
-              p: 2,
-              display: 'flex',
-              flexDirection: 'column',
-              height: 240,
-            }}
-          >
-            {/* <Deposits /> */}
-          </Paper>
-        </Grid>
-        {/* Recent Orders */}
-        <Grid item xs={12}>
-          <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-            {/* <Orders /> */}
-          </Paper>
-        </Grid>
+
       </Grid>
-      
+
     </Dashboard>
   );
 }

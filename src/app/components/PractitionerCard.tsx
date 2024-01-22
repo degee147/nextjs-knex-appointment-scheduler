@@ -1,12 +1,17 @@
 import React from 'react';
 import { Card, CardContent, Typography, CardMedia, Box } from '@mui/material';
 import { Provider } from '@/@types';
+import SlotButtonList from './SlotButtonList';
 
 interface Practitioner {
     name: string;
+    title: string;
+    bio: string;
     specialization: string;
     image: string;
-    availableSlots: string[];
+    phone: string;
+    user: object;
+    slots: object[];
 }
 
 interface PractitionerCardProps {
@@ -26,20 +31,24 @@ const PractitionerCard: React.FC<PractitionerCardProps> = ({ practitioner }) => 
                 />
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant="h5" component="div">
-                        {practitioner.name}
+                        {practitioner.user?.name}
                     </Typography>
                     <Typography variant="subtitle1" color="text.secondary">
-                        title here
+                        {practitioner.title}
+                    </Typography>
+                    <Typography variant="subtitle2" color="text.secondary">
+                        {practitioner.specialization}
                     </Typography>
                 </Box>
             </Box>
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                    Specialization: {practitioner.specialization}
+                    {practitioner.bio}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    Available: {practitioner.availableSlots.join(', ')}
+                    Available Slots
                 </Typography>
+                <SlotButtonList slots={practitioner.slots} />
             </CardContent>
         </Card>
 
