@@ -21,7 +21,6 @@ export const createUser = async (name: string, email: string, hashedPassword: st
         const insertedId = await db('users').insert(user);
         return insertedId[0];
     } catch (error) {
-        // error handling
         console.error('Error inserting user:', error);
     }
 
