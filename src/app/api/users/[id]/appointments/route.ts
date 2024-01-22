@@ -1,7 +1,9 @@
+import { NextRequest } from 'next/server';
 import { createResponse } from '../../../../../../utils/common';
 import db from '../../../../../../utils/database';
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+
 
     const appointments = await db('appointments').where({ user_id: params.id }).select('*');
     for (const appointment of appointments) {

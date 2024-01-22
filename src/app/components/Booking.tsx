@@ -11,37 +11,64 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import moment from 'moment';
+
 
 export const Booking = () => {
 
+    const [selectedSpecialization, setSelectedSpecialization] = useState('');
+    const [selectedDate, setSelectedDate] = useState(moment());
     const [isLoading, setIsLoading] = useState(true);
     const [practitioners, setPractitioners] = useState([]);
-    const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL + '/api/providers/with-slots';
+    let apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL + '/api/providers/with-slots';
 
+
+    const fetchProviders = async (date: string = "", specialization: string = "") => {
+
+        // console.log("date", date);
+        // console.log("specialization", specialization);
+
+        setIsLoading(true);
+        try {
+
+            let params = {};
+            if (date) {
+                params.date = date;
+            }
+            if (specialization) {
+                params.specialization = specialization;
+            }
+
+            const response = await axios.get(apiUrl, { params });
+            // console.log(response.data.data);
+            setPractitioners(response.data.data);
+            setIsLoading(false);
+        } catch (error) {
+            console.error('Error fetching providers:', error);
+            setIsLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchProviders = async () => {
-            setIsLoading(true);
-            try {
-                const response = await axios.get(apiUrl);
-                // console.log(response.data.data);
-                setPractitioners(response.data.data);
-                setIsLoading(false);
-            } catch (error) {
-                console.error('Error fetching providers:', error);
-                setIsLoading(false);
-            }
-        };
-
         fetchProviders();
     }, []);
 
 
-    const handleDateTimeChange = (dateTime) => {
+    const handleChange = (specialization) => {
         // Handle the date-time change, maybe fetch available practitioners
+        setSelectedSpecialization(specialization.target.value);
+        // console.log("specialization", specialization.target.value);
+
+        const formattedDate = selectedDate.format('YYYY-MM-DD');
+        fetchProviders(formattedDate, specialization.target.value);
     };
-    const handleChange = (dateTime) => {
-        // Handle the date-time change, maybe fetch available practitioners
+
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+        const formattedDate = date.format('YYYY-MM-DD');
+        fetchProviders(formattedDate, selectedSpecialization);
+        // Perform any action on date change, like fetching events for the selected date
     };
 
     return (
@@ -53,21 +80,30 @@ export const Booking = () => {
                     {/* Content for row 1 */}
                     <div className="p-1">
                         <h3>Date</h3>
-                        <DatePicker />
+                        {/* <DatePicker /> */}
+                        <DatePicker
+                            // label="Select Date"
+                            format='YYYY-MM-DD'
+                            value={selectedDate}
+                            onChange={handleDateChange}
+                        />
                     </div>
                     <div className="p-1">
                         <h3>Specialization</h3>
                         <FormControl fullWidth>
                             <Select
                                 labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                // value={age}
+                                id="specialization-select"
+                                value={selectedSpecialization}
                                 label="Specialization"
                                 onChange={handleChange}
                             >
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                <MenuItem value="Cardiology">Cardiology</MenuItem>
+                                <MenuItem value="Dermatology">Dermatology</MenuItem>
+                                <MenuItem value="Neurology">Dermatology</MenuItem>
+                                <MenuItem value="Pediatrics">Pediatrics</MenuItem>
+                                <MenuItem value="Surgeon">Surgeon</MenuItem>
+                                <MenuItem value="Physiotherapist">Physiotherapist</MenuItem>
                             </Select>
                         </FormControl>
                     </div>

@@ -9,7 +9,7 @@ export async function seed(knex: Knex): Promise<void> {
     const users = [];
     const hashedPassword = bcrypt.hashSync('password', 10);
 
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 30; i++) {
         users.push({
             name: faker.name.fullName(),
             email: faker.internet.email(),
