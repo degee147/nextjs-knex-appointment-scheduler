@@ -7,10 +7,10 @@ import Dashboard from '../components/Dashboard';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 
-export default function DashboardPage() {
+export default function BookAppointmentPage() {
   useAuthRedirect();
   return (
-    <Dashboard title='Dashboard'>
+    <Dashboard title='Book Appointment'>
       <Grid container spacing={3}>
         {/* Chart */}
         <Grid item xs={12} md={8} lg={9}>

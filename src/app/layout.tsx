@@ -25,16 +25,14 @@ export default function RootLayout({
 
   return (
     <AuthProvider>
-        <html lang="en">
-          <body className={inter.className}>
-            {/* Navigation Bar */}
-            <ClientNavBar />
-            <ToastContainer />
-            <main className="flex min-h-screen flex-col items-center justify-between p-24">
-              {children}
-            </main>
-          </body>
-        </html>
+      <html lang="en">
+        <body className={inter.className}>
+          {/* Navigation Bar */}
+          <ClientNavBar />
+          <ToastContainer />
+          {children}
+        </body>
+      </html>
     </AuthProvider>
   );
 }

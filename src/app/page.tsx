@@ -37,45 +37,47 @@ export default function Home() {
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterMoment}>
-      {/* <Typography variant="h3" component="div">
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <LocalizationProvider dateAdapter={AdapterMoment}>
+        {/* <Typography variant="h3" component="div">
         Select your doctor and appointment time
       </Typography> */}
-      <h2>Select your doctor and appointment time</h2>
-      <div className="grid grid-cols-2">
-        {/* Content for row 1 */}
-        <div className="p-1">
-          <h3>Date</h3>
-          <DatePicker />
+        <h2>Select your doctor and appointment time</h2>
+        <div className="grid grid-cols-2">
+          {/* Content for row 1 */}
+          <div className="p-1">
+            <h3>Date</h3>
+            <DatePicker />
+          </div>
+          <div className="p-1">
+            <h3>Specialization</h3>
+            <FormControl fullWidth>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                // value={age}
+                label="Specialization"
+                onChange={handleChange}
+              >
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
         </div>
-        <div className="p-1">
-          <h3>Specialization</h3>
-          <FormControl fullWidth>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              // value={age}
-              label="Specialization"
-              onChange={handleChange}
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-      </div>
-      <div className="z-10 w-full items-center justify-between font-mono text-sm lg:flex">
+        <div className="z-10 w-full items-center justify-between font-mono text-sm lg:flex">
 
-        {/* <DateTimePickerComponent onDateTimeChange={handleDateTimeChange} /> */}
-        <Grid container spacing={0}>
-          {practitioners.map((practitioner, index) => (
-            <Grid item xs={12} sm={3} md={6} key={index}>
-              <PractitionerCard practitioner={practitioner} />
-            </Grid>
-          ))}
-        </Grid>
-      </div>
-    </LocalizationProvider>
+          {/* <DateTimePickerComponent onDateTimeChange={handleDateTimeChange} /> */}
+          <Grid container spacing={0}>
+            {practitioners.map((practitioner, index) => (
+              <Grid item xs={12} sm={3} md={6} key={index}>
+                <PractitionerCard practitioner={practitioner} />
+              </Grid>
+            ))}
+          </Grid>
+        </div>
+      </LocalizationProvider>
+    </main>
   );
 }
