@@ -20,7 +20,8 @@ export const Booking = () => {
     const [selectedDate, setSelectedDate] = useState(moment());
     const [isLoading, setIsLoading] = useState(true);
     const [practitioners, setPractitioners] = useState([]);
-    let apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL + '/api/providers/with-slots';
+    let apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/providers/with-slots`;
+
 
 
     const fetchProviders = async (date: string = "", specialization: string = "") => {

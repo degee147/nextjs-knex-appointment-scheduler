@@ -7,6 +7,7 @@ import { convertToContextualFormat } from '../../../utils/common';
 import CircularProgress from '@mui/material/CircularProgress';
 import { toast } from 'react-toastify';
 import { Provider, TimeSlot } from '@/@types';
+import Box from '@mui/material/Box';
 
 
 interface SlotButtonListProps {
@@ -20,7 +21,7 @@ export const SlotButtonList = ({ slots }: SlotButtonListProps) => {
     const router = useRouter();
 
 
-    const bookAppointment = async (slotId : any) => {
+    const bookAppointment = async (slotId: any) => {
         setIsLoading(true);
 
         let user_id: any = loggedInId;
@@ -74,19 +75,17 @@ export const SlotButtonList = ({ slots }: SlotButtonListProps) => {
             // Handle errors (e.g., show an error message)
             console.error("Failed to book appointment:", error);
         }
-
-
-
     }
 
 
     return (
-        <div className="flex overflow-x-auto space-x-2 p-2">
+        // <div className="flex overflow-x-auto space-x-2 p-2">
+        <Box sx={{ overflowX: 'auto' }} className="flex w-full p-2">
             {slots.map((slot) => (
                 <Button
                     key={slot.id}
                     variant="outlined"
-                    className="min-w-max whitespace-nowrap"
+                    className="min-w-max whitespace-nowrap mr-2"
                     onClick={() => bookAppointment(slot.id)}
                 >
                     {isLoading ? (
@@ -97,7 +96,8 @@ export const SlotButtonList = ({ slots }: SlotButtonListProps) => {
                 </Button>
 
             ))}
-        </div>
+            {/* </div> */}
+        </Box>
     );
 };
 
