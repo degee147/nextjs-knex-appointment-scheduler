@@ -32,12 +32,17 @@ const style = {
   p: 4,
 };
 
+interface Event {
+  title: string;
+  start: string;
+}
 
 export default function SchedulesPage() {
   useAuthRedirect();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+
   const [isLoading, setIsLoading] = useState(true);
   const [events, setEvents] = useState([]);
   const { isLoggedIn, loggedInId, authToken, logout } = useAuth();
@@ -92,7 +97,7 @@ export default function SchedulesPage() {
 
   }, []);
 
-  const renderEventContent = async (eventInfo) => {
+  const renderEventContent = async (eventInfo: any) => {
     // console.log("eventInfo", eventInfo);
 
     return (
@@ -103,10 +108,12 @@ export default function SchedulesPage() {
     )
   }
 
-  const handleEventClick = (clickInfo) => {
+  const handleEventClick = (clickInfo: any) => {
     setSelectedEvent(clickInfo.event);
     setIsModalOpen(true);
   };
+
+
 
   return (
     <Dashboard title='Schedules'>

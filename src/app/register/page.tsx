@@ -145,14 +145,12 @@ export default function Register() {
                 />
                 <p className="text-black-500 text-xs italic">Re-enter your password</p>
               </div>
-              <div className="mb-6">
+              {/* <div className="mb-6">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="is_provider">
                   <input className="mr-2 leading-tight" type="checkbox" id="is_provider" name="is_provider" checked={isProvider} onChange={(e) => setIsProvider(e.target.checked)} />
-                  <span className="text-sm">
-                    I'm a Medical Practitioner
-                  </span>
+                  <span className="text-sm">I'm a Medical Practitioner</span>
                 </label>
-              </div>
+              </div> */}
               <div className="flex items-center justify-between">
 
                 <button

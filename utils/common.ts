@@ -12,7 +12,7 @@ export function createResponse(message: string, status: number, data?: any) {
     });
 }
 
-export function tokenResponse(token: string, status: number, user_id: number) {
+export function tokenResponse(token: string, status: number, user_id: string) {
     return new Response(JSON.stringify({ token, user_id }), {
         headers: {
             "Content-Type": "application/json",

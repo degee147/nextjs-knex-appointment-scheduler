@@ -1,7 +1,11 @@
 import React from 'react';
 import { Card, CardContent, Typography, CardMedia, Box } from '@mui/material';
-import { Provider } from '@/@types';
+import { Provider, TimeSlot } from '@/@types';
 import { SlotButtonList } from './SlotButtonList';
+
+interface User {
+    name: string;
+}
 
 interface Practitioner {
     name: string;
@@ -10,8 +14,8 @@ interface Practitioner {
     specialization: string;
     image: string;
     phone: string;
-    user: object;
-    slots: object[];
+    user: User;
+    slots: TimeSlot[];
 }
 
 interface PractitionerCardProps {

@@ -6,15 +6,21 @@ import { useRouter } from 'next/navigation';
 import { convertToContextualFormat } from '../../../utils/common';
 import CircularProgress from '@mui/material/CircularProgress';
 import { toast } from 'react-toastify';
+import { Provider, TimeSlot } from '@/@types';
 
-export const SlotButtonList = ({ slots }) => {
+
+interface SlotButtonListProps {
+    slots: TimeSlot[];
+}
+
+export const SlotButtonList = ({ slots }: SlotButtonListProps) => {
 
     const [isLoading, setIsLoading] = useState(false);
     const { isLoggedIn, loggedInId, authToken } = useAuth();
     const router = useRouter();
 
 
-    const bookAppointment = async (slotId) => {
+    const bookAppointment = async (slotId : any) => {
         setIsLoading(true);
 
         let user_id: any = loggedInId;

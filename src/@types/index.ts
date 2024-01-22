@@ -43,8 +43,8 @@ export type ProviderAvailability = {
 export type TimeSlot = {
     id: string;
     provider_id: number;
-    start_time: Date;  // or string,
-    end_time: Date;    // same as start_time
+    start_time: string;  // or string,
+    end_time: string;    // same as start_time
     is_booked: boolean;
 };
 

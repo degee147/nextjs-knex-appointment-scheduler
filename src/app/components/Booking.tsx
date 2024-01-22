@@ -31,7 +31,11 @@ export const Booking = () => {
         setIsLoading(true);
         try {
 
-            let params = {};
+            interface Params {
+                date?: string;
+                specialization?: string;
+            }
+            let params: Params = {};
             if (date) {
                 params.date = date;
             }
@@ -50,11 +54,11 @@ export const Booking = () => {
     };
 
     useEffect(() => {
-        fetchProviders();
+        fetchProviders("", "");
     }, []);
 
 
-    const handleChange = (specialization) => {
+    const handleChange = (specialization: any) => {
         // Handle the date-time change, maybe fetch available practitioners
         setSelectedSpecialization(specialization.target.value);
         // console.log("specialization", specialization.target.value);
@@ -64,11 +68,10 @@ export const Booking = () => {
     };
 
 
-    const handleDateChange = (date) => {
+    const handleDateChange = (date: any) => {
         setSelectedDate(date);
         const formattedDate = date.format('YYYY-MM-DD');
         fetchProviders(formattedDate, selectedSpecialization);
-        // Perform any action on date change, like fetching events for the selected date
     };
 
     return (

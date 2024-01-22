@@ -41,7 +41,8 @@ export async function seed(knex: Knex): Promise<void> {
             }
 
             // Check for 3-hour interval between slots
-            if (lastSlotTime && (slotStart - lastSlotTime) < 3 * 60 * 60 * 1000) {
+            // if (lastSlotTime && (slotStart - lastSlotTime) < 3 * 60 * 60 * 1000) {
+            if (lastSlotTime && (slotStart.getTime() - lastSlotTime.getTime()) < 3 * 60 * 60 * 1000) {
                 continue; // Skip to the next iteration if interval is less than 3 hours
             }
 
