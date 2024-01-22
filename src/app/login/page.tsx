@@ -67,7 +67,7 @@ export default function Login() {
         toast.success("Login successful");
         login(data.token, data.user_id);
         setIsLoading(false);
-        router.push('/dashboard');
+        router.push('/book-appointment');
         return;
       }
       toast.error(data.message);

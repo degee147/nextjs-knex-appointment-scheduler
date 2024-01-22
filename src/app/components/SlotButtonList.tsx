@@ -3,38 +3,12 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import { useAuth } from '../../contexts/AuthContext';
 import { useRouter } from 'next/navigation';
-
-const convertToContextualFormat = (dateStr) => {
-    const date = new Date(dateStr);
-    const now = new Date();
-
-    const dateFormatter = new Intl.DateTimeFormat('en-US', {
-        hour: 'numeric',
-        minute: 'numeric',
-        hour12: true
-    });
-
-    const timePart = dateFormatter.format(date);
-
-    if (date.toDateString() === now.toDateString()) {
-        return `Today ${timePart}`;
-    }
-
-    now.setDate(now.getDate() + 1);
-    if (date.toDateString() === now.toDateString()) {
-        return `Tom ${timePart}`;
-    }
-
-    const dayFormatter = new Intl.DateTimeFormat('en-US', {
-        weekday: 'short'
-    });
-
-    return `${dayFormatter.format(date)} ${timePart}`;
-}
+import { convertToContextualFormat } from '../../../utils/common';
+import { toast } from 'react-toastify';
 
 export const SlotButtonList = ({ slots }) => {
 
-    const { isLoggedIn } = useAuth();
+    const { isLoggedIn, loggedInId, authToken } = useAuth();
     const router = useRouter();
 
 
@@ -42,22 +16,46 @@ export const SlotButtonList = ({ slots }) => {
 
         if (!isLoggedIn) {
             router.push('/login');
+            return;
         }
+
+
+        const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL + '/api/book-appointment';
+
+        const formData = {
+            user_id: loggedInId,
+            time_slot_id: slotId,
+        };
+
         try {
-            // API request to update the time slot as booked
-            // This is just a placeholder, you'll need to replace it with your actual API request
-            // await fetch(`/api/book-appointment/${slotId}`, { method: 'POST' });
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`
+                },
+                body: JSON.stringify(formData)
+            });
+            // toast("Response received");
+            const data = await response.json();
 
-            // Handle successful booking (e.g., show a confirmation message)
-            console.log("Appointment booked successfully!", slotId);
-            console.log("is user logged in", isLoggedIn);
+            if (data.data?.success) {
+                toast.success(data.message);
+            } else {
+                toast.error(data.message);
+            }
 
-            // Optionally, you might want to refresh the slots list to reflect the booked slot
+            // Handle response
+
+            // }  
         } catch (error) {
-            // Handle any errors that occur during the booking process
+            // Handle errors (e.g., show an error message)
             console.error("Failed to book appointment:", error);
         }
-    };
+
+
+
+    }
 
 
     return (

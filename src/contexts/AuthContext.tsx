@@ -2,6 +2,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export const AuthContext = createContext<{
+    authToken: string;
+    loggedInId: string;
     isLoggedIn: boolean;
     login: (token: string, user_id: string) => void;
     logout: () => void;
@@ -23,6 +25,8 @@ interface AuthProviderProps {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [loggedInId, setLoggedInId] = useState("");
+    const [authToken, setAuthToken] = useState("");
 
 
     useEffect(() => {
@@ -37,15 +41,20 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         localStorage.setItem('authToken', token);
         localStorage.setItem('user_id', user_id);
         setIsLoggedIn(true);
+        setLoggedInId(user_id);
+        setAuthToken(user_id);
     };
 
     const logout = () => {
         localStorage.removeItem('authToken');
+        localStorage.removeItem('user_id');
         setIsLoggedIn(false);
+        setLoggedInId("");
+        setAuthToken("");
     };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+        <AuthContext.Provider value={{ isLoggedIn, login, logout, loggedInId, authToken }}>
             {children}
         </AuthContext.Provider>
     );

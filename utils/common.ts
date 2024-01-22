@@ -31,3 +31,32 @@ export function getRandomStartHour() {
 
     return Math.floor(Math.random() * (maxHour - minHour + 1)) + minHour;
 };
+
+
+export function convertToContextualFormat(dateStr: string) {
+    const date = new Date(dateStr);
+    const now = new Date();
+
+    const dateFormatter = new Intl.DateTimeFormat('en-US', {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+    });
+
+    const timePart = dateFormatter.format(date);
+
+    if (date.toDateString() === now.toDateString()) {
+        return `Today ${timePart}`;
+    }
+
+    now.setDate(now.getDate() + 1);
+    if (date.toDateString() === now.toDateString()) {
+        return `Tom ${timePart}`;
+    }
+
+    const dayFormatter = new Intl.DateTimeFormat('en-US', {
+        weekday: 'short'
+    });
+
+    return `${dayFormatter.format(date)} ${timePart}`;
+}
