@@ -20,7 +20,7 @@ export const SlotButtonList = ({ slots }) => {
         let user_id: any = loggedInId;
         if (!isLoggedIn) {
             setIsLoading(false);
-            toast("Session Expired. Please login");
+            toast("Please login to proceed");
             router.push('/login');
             return;
         }
@@ -29,7 +29,7 @@ export const SlotButtonList = ({ slots }) => {
         if (!user_id || user_id == "") {
             user_id = await localStorage.getItem('user_id');
             if (!user_id) {
-                toast("Session Expired. Please login");
+                toast("Please login to proceed");
                 setIsLoading(false);
                 router.push('/login');
                 return;

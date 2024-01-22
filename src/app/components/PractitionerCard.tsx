@@ -45,10 +45,24 @@ const PractitionerCard: React.FC<PractitionerCardProps> = ({ practitioner }) => 
                 <Typography variant="body2" color="text.secondary">
                     {practitioner.bio}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    Available Slots
-                </Typography>
-                <SlotButtonList slots={practitioner.slots} />
+                {practitioner.slots && practitioner.slots.length === 0 && (
+                    <>
+                        <Typography variant="body2" color="text.secondary">
+                            No Available Slots
+                        </Typography>
+                    </>
+                )}
+
+                {practitioner.slots && practitioner.slots.length > 0 && (
+                    <>
+                        <Typography variant="body2" color="text.secondary">
+                            Available Slots
+                        </Typography>
+                        <SlotButtonList slots={practitioner.slots} />
+                    </>
+                )}
+
+
             </CardContent>
         </Card>
 

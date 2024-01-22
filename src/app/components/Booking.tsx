@@ -100,7 +100,7 @@ export const Booking = () => {
                             >
                                 <MenuItem value="Cardiology">Cardiology</MenuItem>
                                 <MenuItem value="Dermatology">Dermatology</MenuItem>
-                                <MenuItem value="Neurology">Dermatology</MenuItem>
+                                <MenuItem value="Neurology">Neurology</MenuItem>
                                 <MenuItem value="Pediatrics">Pediatrics</MenuItem>
                                 <MenuItem value="Surgeon">Surgeon</MenuItem>
                                 <MenuItem value="Physiotherapist">Physiotherapist</MenuItem>
