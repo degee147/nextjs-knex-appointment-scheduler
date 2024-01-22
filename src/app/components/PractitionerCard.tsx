@@ -25,8 +25,8 @@ interface PractitionerCardProps {
 // const PractitionerCard = ({ practitioner  }) => {
 const PractitionerCard: React.FC<PractitionerCardProps> = ({ practitioner }) => {
     return (
-        <Card sx={{ display: 'flex', flexDirection: 'column', maxWidth: '100%', borderRadius: '5%', m: 2 }}>
-            <Box sx={{ display: 'flex', alignItems: 'start', p: 2 }}>
+        <Card sx={{ display: 'flex', flexDirection: 'column', maxWidth: '100%', borderRadius: '2%', m: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', p: 2 }}>
                 <CardMedia
                     component="img"
                     sx={{ width: 60, height: 60, borderRadius: '50%', mr: 2 }}

@@ -22,8 +22,8 @@ export async function POST(request: Request) {
                 return createResponse('Invalid email or password', 401);
             }
 
-            const token = generateToken(user.id);
-            return tokenResponse(token, 201, user.id);
+            const token = generateToken(String(user.id));
+            return tokenResponse(token, 201, String(user.id));
 
         } catch (error) {
             console.error(error);

@@ -10,7 +10,7 @@ export const getUserByEmail = async (email: string): Promise<User | undefined> =
 export const createUser = async (name: string, email: string, hashedPassword: string, is_provider: boolean): Promise<number> => {
 
     const user: User = {
-        id: "",
+        // id: "",
         name: name,
         email: email,
         password: hashedPassword,

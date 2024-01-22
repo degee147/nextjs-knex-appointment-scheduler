@@ -1,5 +1,5 @@
 export type User = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     password: string;
@@ -9,7 +9,7 @@ export type User = {
 }
 
 export type Provider = {
-    id: string;
+    id?: string;
     user_id: number;
     title: string;
     phone: string;
@@ -32,7 +32,7 @@ export enum DayOfWeek {
 
 // Define a type for Provider Availability
 export type ProviderAvailability = {
-    id: string;
+    id?: string;
     provider_id: number;
     day_of_week: DayOfWeek;
     start_time: string;
@@ -41,7 +41,7 @@ export type ProviderAvailability = {
 };
 
 export type TimeSlot = {
-    id: string;
+    id?: string;
     provider_id: number;
     start_time: string;  // or string,
     end_time: string;    // same as start_time
@@ -49,7 +49,7 @@ export type TimeSlot = {
 };
 
 export type Appointment = {
-    id: string;
+    id?: string;
     user_id: number;
     provider_id: number;
     time_slot_id: number;

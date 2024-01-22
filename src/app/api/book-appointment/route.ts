@@ -17,42 +17,41 @@ export async function POST(request: Request) {
             id: body.time_slot_id,
         }).first();
 
-        if (slot) {
-            if (slot.is_booked) {
-                return createResponse("This slot is no longer available", 400);
-            }
-
-
-            const appointment: Appointment = {
-                id: "",
-                user_id: body.user_id,
-                provider_id: slot.provider_id,
-                time_slot_id: slot.id,
-                appointment_date: slot.start_time
-            };
-
-
-            const insertedId = await db('appointments').insert(appointment);
-            if (insertedId.length > 0) {
-                const updateCount = await db('time_slots')
-                    .where({ id: body.time_slot_id })
-                    .update({ is_booked: true });
-
-                const provider = await db('providers').where({
-                    id: slot.provider_id
-                }).first();
-                if (provider) {
-                    const provider_user = await db('users').where('id', provider.user_id).first();
-                    if (provider_user) {
-
-                        return createResponse("Appointment Booked for " + convertToContextualFormat(slot.start_time) + " with " + provider_user.name, 200, { success: true, slot });
-                    }
-                }
-
-            }
-
-
+        if (!slot) {
+            return createResponse("This slot is no longer available", 400);
         }
+        if (slot.is_booked) {
+            return createResponse("This slot is no longer available", 400);
+        }
+
+        const appointment: Appointment = {
+            // id: "",
+            user_id: body.user_id,
+            provider_id: slot.provider_id,
+            time_slot_id: slot.id,
+            appointment_date: slot.start_time
+        };
+
+        const insertedId = await db('appointments').insert(appointment);
+        if (insertedId.length <= 0) {
+            return createResponse("Unable to schedule appointment", 400);
+        }
+        
+        const updateCount = await db('time_slots')
+            .where({ id: body.time_slot_id })
+            .update({ is_booked: true });
+
+        const provider = await db('providers').where({
+            id: slot.provider_id
+        }).first();
+        if (provider) {
+            const provider_user = await db('users').where('id', provider.user_id).first();
+            if (provider_user) {
+                return createResponse("Appointment Booked for " + convertToContextualFormat(slot.start_time) + " with " + provider_user.name, 200, { success: true, slot });
+            }
+        }
+
+
 
         // Start a transaction
         // try {

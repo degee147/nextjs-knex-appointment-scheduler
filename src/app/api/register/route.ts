@@ -29,10 +29,13 @@ export async function POST(request: Request) {
 
         // Step 3: Save the User to the Database
         const userId = await createUser(body.name, body.email, hashedPassword, body.is_provider);
+        if (userId == 0) {
+            return createResponse("Could not create user record", 400);
+        }
 
         // Step 4: Generate a Token or Confirmation Response
         const token = generateToken(userId);
-        return tokenResponse(token, 201, userId.toString());
+        return tokenResponse(token, 201, String(userId));
 
     } catch (error) {
         console.error(error);

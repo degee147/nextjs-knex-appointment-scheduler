@@ -20,7 +20,7 @@ export const Booking = () => {
     const [selectedDate, setSelectedDate] = useState(moment());
     const [isLoading, setIsLoading] = useState(true);
     const [practitioners, setPractitioners] = useState([]);
-    let apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/providers/with-slots`;
+    let apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}api/providers/with-slots`;
 
 
 
@@ -129,7 +129,7 @@ export const Booking = () => {
                 {!isLoading && (
                     <Grid container spacing={0}>
                         {practitioners.map((practitioner, index) => (
-                            <Grid item xs={12} sm={3} md={6} key={index}>
+                            <Grid item xs={12} sm={12} md={12} key={index}>
                                 <PractitionerCard practitioner={practitioner} />
                             </Grid>
                         ))}
