@@ -9,6 +9,7 @@ export async function POST(request: Request) {
         const body = await request.json();
 
         if (!body.user_id || !body.time_slot_id) {
+            console.log("body", body);
             return createResponse("Oops! Something went wrong", 400);
         }
 
