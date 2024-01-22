@@ -13,7 +13,9 @@ export function middleware(req: NextRequest) {
 
 
     // Check if the pathname starts with any of the paths in the array
-    const isMatch = pathsToCheck.some(path => pathname.startsWith(path));
+    // const isMatch = pathsToCheck.some(path => pathname.startsWith(path));
+
+    const isMatch = false;
 
 
     if (isMatch) {

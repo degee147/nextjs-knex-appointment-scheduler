@@ -9,6 +9,9 @@ export async function GET(request: Request, { params }: { params: { id: string }
         if (appointment.provider) {
             appointment.doctor = await db('users').where('id', appointment.provider.user_id).first();
         }
+        appointment.title = appointment.doctor.name;
+        appointment.date = appointment.appointment_date;
     }
-    return createResponse("User Appointments for " + params.id, 200, appointments);
+    return createResponse("Appointments Fetched", 200, { appointments, success: true });
+    // return createResponse("User Appointments for " + params.id, 200, appointments);
 }

@@ -9,22 +9,27 @@ import PractitionerCard from './PractitionerCard';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 export const Booking = () => {
 
+    const [isLoading, setIsLoading] = useState(true);
     const [practitioners, setPractitioners] = useState([]);
     const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL + '/api/providers/with-slots';
 
 
     useEffect(() => {
         const fetchProviders = async () => {
+            setIsLoading(true);
             try {
                 const response = await axios.get(apiUrl);
                 // console.log(response.data.data);
                 setPractitioners(response.data.data);
+                setIsLoading(false);
             } catch (error) {
                 console.error('Error fetching providers:', error);
+                setIsLoading(false);
             }
         };
 
@@ -66,20 +71,34 @@ export const Booking = () => {
                             </Select>
                         </FormControl>
                     </div>
+
+
+                </div>
+                <div className="p-1  items-center justify-center">
+                    {isLoading && (
+                        <div>
+                            <br />
+                            <CircularProgress size={50} color="secondary" />
+                        </div>
+                    )}
                 </div>
             </div>
 
             <div className="z-10 w-full items-center justify-between font-mono text-sm lg:flex">
 
+                {!isLoading && (
+                    <Grid container spacing={0}>
+                        {practitioners.map((practitioner, index) => (
+                            <Grid item xs={12} sm={3} md={6} key={index}>
+                                <PractitionerCard practitioner={practitioner} />
+                            </Grid>
+                        ))}
+                    </Grid>
+                )}
+
                 {/* <DateTimePickerComponent onDateTimeChange={handleDateTimeChange} /> */}
-                <Grid container spacing={0}>
-                    {practitioners.map((practitioner, index) => (
-                        <Grid item xs={12} sm={3} md={6} key={index}>
-                            <PractitionerCard practitioner={practitioner} />
-                        </Grid>
-                    ))}
-                </Grid>
-            </div>
-        </LocalizationProvider>
+
+            </div >
+        </LocalizationProvider >
     );
 }

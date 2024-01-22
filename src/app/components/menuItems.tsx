@@ -35,14 +35,14 @@ export const MainListItems = () => {
                     <ListItemText primary="Home" />
                 </ListItemButton>
             </Link>
-            <Link href="/dashboard" passHref>
+            {/* <Link href="/dashboard" passHref>
                 <ListItemButton>
                     <ListItemIcon>
                         <DashboardIcon />
                     </ListItemIcon>
                     <ListItemText primary="Dashboard" />
                 </ListItemButton>
-            </Link>
+            </Link> */}
             <Link href="/book-appointment" passHref>
                 <ListItemButton>
                     <ListItemIcon>
@@ -54,7 +54,7 @@ export const MainListItems = () => {
             <Link href="/schedules" passHref>
                 <ListItemButton>
                     <ListItemIcon>
-                        <PeopleIcon />
+                    <DashboardIcon />
                     </ListItemIcon>
                     <ListItemText primary="Schedules" />
                 </ListItemButton>
