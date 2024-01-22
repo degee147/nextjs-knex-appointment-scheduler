@@ -1,24 +1,8 @@
+"use client";
 import React from 'react';
 import Button from '@mui/material/Button';
-
-
-const convertTo12HourFormat = (time) => {
-    const [hours, minutes] = time.split(':');
-    const hour = parseInt(hours, 10);
-    const suffix = hour >= 12 ? "PM" : "AM";
-    const newHour = hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour);
-    return `${newHour}:${minutes} ${suffix}`;
-};
-
-const convertToReadableFormat = (dateStr) => {
-    const date = new Date(dateStr);
-    const options = {
-        weekday: 'short',
-        hour: 'numeric',
-        hour12: true
-    };
-    return new Intl.DateTimeFormat('en-US', options).format(date);
-}
+import { useAuth } from '../../contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 
 const convertToContextualFormat = (dateStr) => {
     const date = new Date(dateStr);
@@ -42,13 +26,40 @@ const convertToContextualFormat = (dateStr) => {
     }
 
     const dayFormatter = new Intl.DateTimeFormat('en-US', {
-        weekday: 'long'
+        weekday: 'short'
     });
 
     return `${dayFormatter.format(date)} ${timePart}`;
 }
 
-const SlotButtonList = ({ slots }) => {
+export const SlotButtonList = ({ slots }) => {
+
+    const { isLoggedIn } = useAuth();
+    const router = useRouter();
+
+
+    const bookAppointment = async (slotId) => {
+
+        if (!isLoggedIn) {
+            router.push('/login');
+        }
+        try {
+            // API request to update the time slot as booked
+            // This is just a placeholder, you'll need to replace it with your actual API request
+            // await fetch(`/api/book-appointment/${slotId}`, { method: 'POST' });
+
+            // Handle successful booking (e.g., show a confirmation message)
+            console.log("Appointment booked successfully!", slotId);
+            console.log("is user logged in", isLoggedIn);
+
+            // Optionally, you might want to refresh the slots list to reflect the booked slot
+        } catch (error) {
+            // Handle any errors that occur during the booking process
+            console.error("Failed to book appointment:", error);
+        }
+    };
+
+
     return (
         <div className="flex overflow-x-auto space-x-2 p-2">
             {slots.map((slot) => (
@@ -56,6 +67,7 @@ const SlotButtonList = ({ slots }) => {
                     key={slot.id}
                     variant="outlined"
                     className="min-w-max whitespace-nowrap"
+                    onClick={() => bookAppointment(slot.id)}
                 >
                     {convertToContextualFormat(slot.start_time)}
                 </Button>

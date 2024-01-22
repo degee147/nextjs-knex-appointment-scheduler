@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent, Typography, CardMedia, Box } from '@mui/material';
 import { Provider } from '@/@types';
-import SlotButtonList from './SlotButtonList';
+import { SlotButtonList } from './SlotButtonList';
 
 interface Practitioner {
     name: string;
