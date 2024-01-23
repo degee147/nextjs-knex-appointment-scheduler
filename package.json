@@ -10,7 +10,9 @@
     "migrate": "knex migrate:latest --knexfile ./knexfile.ts",
     "migrate:rollback": "knex migrate:rollback --knexfile ./knexfile.ts",
     "migrate:list": "knex migrate:list --knexfile ./knexfile.ts",
-    "seed": "knex seed:run"
+    "seed": "knex seed:run",
+    "build:generateTimeSlots": "tsc utils/generateTimeSlots.ts",
+    "slots": "npm run build:generateTimeSlots && node utils/generateTimeSlots.js"
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.10",

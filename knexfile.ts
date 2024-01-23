@@ -7,7 +7,7 @@ interface KnexConfig {
 
 const config: KnexConfig = {
   development: {
-    client: 'postgresql',
+    client: 'mysql2',
     connection: {
       host: process.env.DEV_DB_HOST,
       // port: process.env.DEV_DB_PORT,
@@ -18,7 +18,20 @@ const config: KnexConfig = {
     migrations: {
       tableName: 'migrations'
     }
-  },  
+  },
+  staging: {
+    client: 'postgresql',
+    connection: {
+      host: process.env.PROD_DB_HOST,
+      // port: process.env.DEV_DB_PORT,
+      database: process.env.PROD_DB_NAME,
+      user: process.env.PROD_DB_USER,
+      password: process.env.PROD_DB_PASSWORD,
+    },
+    migrations: {
+      tableName: 'migrations'
+    }
+  },
   production: {
     client: 'postgresql',
     connection: {
