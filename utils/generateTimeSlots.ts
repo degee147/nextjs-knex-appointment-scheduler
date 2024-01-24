@@ -73,14 +73,27 @@ async function generateTimeSlots() {
             }
         }
 
-        // Remove unbooked timeslots in the past
+        // Remove unbooked timeslots in the past and not in appointments
         const currentTime = new Date().toISOString();
         await db("time_slots")
+            .leftJoin('appointments', 'time_slots.id', 'appointments.time_slot_id')
             .where({
-                is_booked: false
+                'time_slots.is_booked': false
             })
-            .andWhere('start_time', '<', currentTime)
+            .andWhere('time_slots.start_time', '<', currentTime)
+            .whereNull('appointments.time_slot_id')
             .del();
+
+
+
+
+        // const currentTime = new Date().toISOString();
+        // await db("time_slots")
+        //     .where({
+        //         is_booked: false
+        //     })
+        //     .andWhere('start_time', '<', currentTime)
+        //     .del();
 
 
         console.log("Time slots generated for next week");
