@@ -33,12 +33,13 @@ export async function GET(request: NextRequest) {
             provider.user = await db('users').where('id', provider.user_id).first();
             const currentDateTime = new Date().toISOString();
 
-            // Adjust the slot query based on the date parameter
+            // Initialize the slot query
             let slotQuery = db('time_slots').where({
                 provider_id: provider.id,
                 is_booked: false
             }).andWhere('start_time', '>', currentDateTime);
 
+            // Adjust the slot query based on the date parameter
             if (dateParam) {
                 let nextDay = new Date(dateFilter);
                 nextDay.setDate(nextDay.getDate() + 1);
@@ -47,8 +48,13 @@ export async function GET(request: NextRequest) {
                     .andWhere('start_time', '<', nextDay.toISOString());
             }
 
+            // Order the slots by start time, most recent first
+            slotQuery = slotQuery.orderBy('start_time', 'asc');
+
+            // Fetch and assign slots
             provider.slots = await slotQuery.select('*');
         }
+
 
         return createResponse("All providers data with their slots", 200, providers);
     } catch (error) {

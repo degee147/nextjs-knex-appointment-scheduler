@@ -49,10 +49,15 @@ export function convertToContextualFormat(dateStr: string) {
         return `Today ${timePart}`;
     }
 
-    now.setDate(now.getDate() + 1);
-    if (date.toDateString() === now.toDateString()) {
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate() + 1); // Set to tomorrow's date
+
+    if (date.toDateString() === tomorrow.toDateString()) {
         return `Tom ${timePart}`;
     }
+    // now.setDate(now.getDate() + 1);
+    // if (date.toDateString() === now.toDateString()) {
+    // }
 
     const dayFormatter = new Intl.DateTimeFormat('en-US', {
         weekday: 'short'

@@ -7,7 +7,7 @@ interface KnexConfig {
 
 const config: KnexConfig = {
   development: {
-    client: 'postgresql',
+    client: process.env.DEV_CLIENT,
     connection: {
       host: process.env.DEV_DB_HOST,
       // port: process.env.DEV_DB_PORT,
