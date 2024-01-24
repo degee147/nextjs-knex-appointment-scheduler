@@ -73,6 +73,16 @@ async function generateTimeSlots() {
             }
         }
 
+        // Remove unbooked timeslots in the past
+        const currentTime = new Date().toISOString();
+        await db("time_slots")
+            .where({
+                is_booked: false
+            })
+            .andWhere('start_time', '<', currentTime)
+            .del();
+
+
         console.log("Time slots generated for next week");
     } catch (error) {
         console.error("Error generating time slots:", error);
