@@ -37,3 +37,4 @@ next-env.d.ts
 
 .env
 /utils/*.js
+knexfile.js
