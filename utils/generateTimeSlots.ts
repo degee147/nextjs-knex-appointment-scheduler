@@ -41,18 +41,7 @@ async function generateTimeSlots() {
             const endTime = new Date(baseDate);
             endTime.setHours(endHours, endMinutes);
 
-            // Check for existing time slots for the same provider, day, and not booked
-            const existingTimeSlots = await db("time_slots")
-                .where({
-                    provider_id: availability.provider_id,
-                    is_booked: false,
-                    start_time: { '>=': startTime.toISOString() },
-                    end_time: { '<=': endTime.toISOString() },
-                });
 
-            if (existingTimeSlots.length > 0) {
-                continue; // Skip to the next provider if there are existing time slots
-            }
 
             let slotCount = unbookedSlots.length;
             let lastSlotTime = null;
@@ -67,6 +56,19 @@ async function generateTimeSlots() {
 
                 if (slotEnd > endTime) {
                     break;
+                }
+
+                // Check for existing time slots for the same provider, day, and not booked
+                const existingTimeSlots = await db("time_slots")
+                    .where({
+                        provider_id: availability.provider_id,
+                        is_booked: false,
+                        start_time: slotStart.toISOString(),
+                        end_time: slotEnd.toISOString(),
+                    });
+
+                if (existingTimeSlots.length > 0) {
+                    continue; // Skip to the next provider if there are existing time slots
                 }
 
                 timeSlots.push({

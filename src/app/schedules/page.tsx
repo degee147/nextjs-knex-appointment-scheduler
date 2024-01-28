@@ -53,10 +53,10 @@ export default function SchedulesPage() {
       try {
 
         setIsLoading(true);
-        const authToken = await localStorage.getItem('authToken');
-        const user_id = await localStorage.getItem('user_id');
+        const authTokn = authToken || await localStorage.getItem('authToken');
+        const user_id = loggedInId || await localStorage.getItem('user_id');
 
-        if (!authToken || !user_id || !isLoggedIn) {
+        if (!authTokn || !user_id) {
           toast("Session Expired. Please login");
           logout();
           router.push('/login');
