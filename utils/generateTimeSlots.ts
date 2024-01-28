@@ -41,6 +41,19 @@ async function generateTimeSlots() {
             const endTime = new Date(baseDate);
             endTime.setHours(endHours, endMinutes);
 
+            // Check for existing time slots for the same provider, day, and not booked
+            const existingTimeSlots = await db("time_slots")
+                .where({
+                    provider_id: availability.provider_id,
+                    is_booked: false,
+                    start_time: { '>=': startTime.toISOString() },
+                    end_time: { '<=': endTime.toISOString() },
+                });
+
+            if (existingTimeSlots.length > 0) {
+                continue; // Skip to the next provider if there are existing time slots
+            }
+
             let slotCount = unbookedSlots.length;
             let lastSlotTime = null;
 
@@ -73,7 +86,7 @@ async function generateTimeSlots() {
             }
         }
 
-        // Remove unbooked timeslots in the past and not in appointments
+        // Remove unbooked time slots in the past and not in appointments
         const currentTime = new Date().toISOString();
         await db("time_slots")
             .leftJoin('appointments', 'time_slots.id', 'appointments.time_slot_id')
@@ -83,18 +96,6 @@ async function generateTimeSlots() {
             .andWhere('time_slots.start_time', '<', currentTime)
             .whereNull('appointments.time_slot_id')
             .del();
-
-
-
-
-        // const currentTime = new Date().toISOString();
-        // await db("time_slots")
-        //     .where({
-        //         is_booked: false
-        //     })
-        //     .andWhere('start_time', '<', currentTime)
-        //     .del();
-
 
         console.log("Time slots generated for next week");
     } catch (error) {
