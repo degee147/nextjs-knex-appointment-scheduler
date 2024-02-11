@@ -4,6 +4,29 @@ const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sat
 
 async function generateTimeSlots() {
     try {
+
+        let count = 0;
+        // remove unbooked slots
+        const timeSlots = await db("time_slots")
+            .where({
+                'time_slots.is_booked': false
+            })
+
+        for (const timeSlot of timeSlots) {
+            // Check if the time slot still meets the conditions
+            const appointmentExists = await db("appointments")
+                .where("time_slot_id", timeSlot.id)
+                .first();
+
+            if (!appointmentExists) {
+                // Delete the time slot since it's not booked
+                count++;
+                await db("time_slots")
+                    .where("id", timeSlot.id)
+                    .del();
+            }
+        }
+
         const providerAvailabilities = await db("provider_availability").select("*");
 
         for (const availability of providerAvailabilities) {
@@ -62,7 +85,7 @@ async function generateTimeSlots() {
                 const existingTimeSlots = await db("time_slots")
                     .where({
                         provider_id: availability.provider_id,
-                        is_booked: false,
+                        // is_booked: false,
                         start_time: slotStart.toISOString(),
                         end_time: slotEnd.toISOString(),
                     });
@@ -88,18 +111,8 @@ async function generateTimeSlots() {
             }
         }
 
-        // Remove unbooked time slots in the past and not in appointments
-        const currentTime = new Date().toISOString();
-        await db("time_slots")
-            .leftJoin('appointments', 'time_slots.id', 'appointments.time_slot_id')
-            .where({
-                'time_slots.is_booked': false
-            })
-            .andWhere('time_slots.start_time', '<', currentTime)
-            .whereNull('appointments.time_slot_id')
-            .del();
-
-        console.log("Time slots generated for next week");
+        
+        console.log("Time slots generated for next week, removed duplicates. Count: " + count);
     } catch (error) {
         console.error("Error generating time slots:", error);
     } finally {
